@@ -46,3 +46,14 @@ def process_pdf(pdf_path):
 def update_database(background_tasks: BackgroundTasks):
     background_tasks.add_task(fetch_pdfs_from_github)
     return {"message": "Updating database in the background..."}
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+@app.post("/update")
+def update_database(background_tasks: BackgroundTasks):
+    background_tasks.add_task(fetch_pdfs_from_github)  # Make sure this function is defined
+    return {"message": "Updating database in the background..."}
+
+
