@@ -1,5 +1,6 @@
 from fastapi import FastAPI, BackgroundTasks
 import os
+import uvicorn
 import chromadb
 from PyPDF2 import PdfReader
 import requests
@@ -51,9 +52,9 @@ def update_database(background_tasks: BackgroundTasks):
 def health_check():
     return {"status": "ok"}
 
-@app.post("/update")
-def update_database(background_tasks: BackgroundTasks):
-    background_tasks.add_task(fetch_pdfs_from_github)  # Make sure this function is defined
-    return {"message": "Updating database in the background..."}
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 
